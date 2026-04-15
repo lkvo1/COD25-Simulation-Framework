@@ -57,17 +57,20 @@ public:
             __reg[i] = 0;
         }
 
-        auto ifs = std::ifstream(__Configs::instr_mem_ini);
-        if(!ifs.is_open()) throw std::runtime_error("Failed to open file: " + std::string(__Configs::instr_mem_ini));
-        for(uint32_t i = 0; i < (1 << __Configs::instr_mem_depth) && !ifs.eof(); i++) {
-            ifs >> std::hex >> __instr_mem[i];
-        }
+        auto load_word_memory = [](const char * _path, std::vector<uint32_t> & _memory) {
+            auto ifs = std::ifstream(_path);
+            if(!ifs.is_open()) throw std::runtime_error("Failed to open file: " + std::string(_path));
 
-        ifs = std::ifstream(__Configs::data_mem_ini);
-        if(!ifs.is_open()) throw std::runtime_error("Failed to open file: " + std::string(__Configs::data_mem_ini));
-        for(uint32_t i = 0; i < (1 << __Configs::data_mem_depth) && !ifs.eof(); i++) {
-            ifs >> std::hex >> __data_mem[i];
-        }
+            uint32_t byte = 0;
+            uint32_t byte_idx = 0;
+            while(byte_idx < _memory.size() * 4 && (ifs >> std::hex >> byte)) {
+                _memory[byte_idx >> 2] |= (byte & 0xFF) << ((byte_idx & 0x3) * 8);
+                byte_idx++;
+            }
+        };
+
+        load_word_memory(__Configs::instr_mem_ini, __instr_mem);
+        load_word_memory(__Configs::data_mem_ini, __data_mem);
     }
 
     inline void step() {

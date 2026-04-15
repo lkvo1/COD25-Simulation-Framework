@@ -1,14 +1,17 @@
-// instruction memory size: 2 ^ INSTR_MEM_DEPTH * 4B
-`define INSTR_MEM_START         32'H00400000
-`define INSTR_MEM_DEPTH         16
-`define INSTR_MEM_INI           "mem/instr.ini"
+`define ISA_RV32I
+`define CPU_TYPE_SINGLE_CYCLE
+`define HALT_INST 32'h00100073  // ebreak
 
-// data memory size: 2 ^ DATA_MEM_DEPTH * 4B
-`define DATA_MEM_START          32'H10010000
-`define DATA_MEM_DEPTH          16
-`define DATA_MEM_INI            "mem/data.ini"
+`define INSTR_MEM_START 32'h00400000
+`define INSTR_MEM_SIZE  4096
+`define INSTR_MEM_DEPTH 16
+`define INSTR_MEM_INI   "mem/instr.ini"
 
-// core type
-`define SINGLE_CYCLE            8'H0
-`define PIPELINE                8'H1
-`define CORE_TYPE               `SINGLE_CYCLE
+`define DATA_MEM_START 32'h00000000
+`define DATA_MEM_SIZE   4096
+`define DATA_MEM_DEPTH  16
+`define DATA_MEM_INI    "mem/data.ini"
+
+`define SINGLE_CYCLE 1'b0
+`define PIPELINE     1'b1
+`define CORE_TYPE    `SINGLE_CYCLE

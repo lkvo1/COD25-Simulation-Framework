@@ -40,4 +40,5 @@ verilate(   sim
             PREFIX VTop
             DIRECTORY ${CMAKE_SOURCE_DIR}/generated
             TRACE
+            VERILATOR_ARGS --Wno-fatal
 )

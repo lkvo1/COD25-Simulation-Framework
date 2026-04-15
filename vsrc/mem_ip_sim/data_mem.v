@@ -27,14 +27,27 @@ module
         output          [31 : 0]                            debug_spo
     );
 
+    localparam                                              WORD_COUNT      = (1 << `DATA_MEM_DEPTH);
+    localparam                                              BYTE_COUNT      = WORD_COUNT << 2;
     reg                 [31 : 0]                            mem             [0 : (1 << `DATA_MEM_DEPTH) - 1];
+    reg                 [ 7 : 0]                            raw_mem         [0 : BYTE_COUNT - 1];
+    integer                                                 i;
 
     wire                                                    cached_we;
     wire                [`DATA_MEM_DEPTH - 1 : 0]           cached_a;
     wire                [31 : 0]                            cached_d;
 
     initial begin
-        $readmemh(`DATA_MEM_INI, mem);
+        for(i = 0; i < WORD_COUNT; i = i + 1) begin
+            mem[i] = 32'd0;
+        end
+        for(i = 0; i < BYTE_COUNT; i = i + 1) begin
+            raw_mem[i] = 8'd0;
+        end
+        $readmemh(`DATA_MEM_INI, raw_mem);
+        for(i = 0; i < WORD_COUNT; i = i + 1) begin
+            mem[i] = {raw_mem[i * 4 + 3], raw_mem[i * 4 + 2], raw_mem[i * 4 + 1], raw_mem[i * 4]};
+        end
     end
 
     // cache we, a, d for one cycle if core type is pipeline
