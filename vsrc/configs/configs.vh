@@ -7,7 +7,7 @@
 `define INSTR_MEM_DEPTH 16
 `define INSTR_MEM_INI   "mem/instr.ini"
 
-`define DATA_MEM_START 32'h00000000
+`define DATA_MEM_START 32'h10000000
 `define DATA_MEM_SIZE   4096
 `define DATA_MEM_DEPTH  16
 `define DATA_MEM_INI    "mem/data.ini"

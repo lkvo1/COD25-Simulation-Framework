@@ -26,7 +26,7 @@ public:
     inline constexpr static uint32_t instr_mem_start = 0x00400000;
     inline constexpr static uint32_t instr_mem_depth = 16;
     inline constexpr static const char * instr_mem_ini = "mem/instr.ini";
-    inline constexpr static uint32_t data_mem_start = 0x00000000;
+    inline constexpr static uint32_t data_mem_start = 0x10000000;
     inline constexpr static uint32_t data_mem_depth = 16;
     inline constexpr static const char * data_mem_ini = "mem/data.ini";
 };
