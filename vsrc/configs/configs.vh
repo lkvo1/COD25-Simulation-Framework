@@ -14,4 +14,4 @@
 
 `define SINGLE_CYCLE 1'b0
 `define PIPELINE     1'b1
-`define CORE_TYPE    `SINGLE_CYCLE
+`define CORE_TYPE    `PIPELINE
